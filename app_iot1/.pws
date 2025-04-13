@@ -1,0 +1,3 @@
+
+export MQTT_USERNAME=mqtt_dev
+export MQTT_PASSWORD=abfr24
