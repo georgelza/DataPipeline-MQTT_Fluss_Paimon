@@ -1,5 +1,7 @@
 # Building a IoT Source via MQTT Broker to Apache Flink/Fluss Pipeline for IoT based payload.
 
+Work in Progress... NOT COMPLETE.
+
 ## Overview
 
 We will Publish IoT structured payload for 6 factories onto 3 seperate MQTT Brokers (North, South and East), 2 factories per broker.
