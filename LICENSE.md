@@ -1,7 +1,7 @@
 # Regarding License for this code stack.
 
 
-The Python application code as published on GitHub at the following [link](https://github.com/georgelza/DataPipeline-MongoDBPaimon) under the `app_io1/` directory.
+The Python application code as published on GitHub at the following [link](https://github.com/georgelza/DataPipeline-MQTT_Fluss_Paimon.git) under the `app_iot1/` directory.
 
 
 For Personal use I'm releasing it under MIT for personal use, personal eductation. If you going to use this or parts if it please credit me.
