@@ -167,7 +167,8 @@ services:
     container_name: jobmanager
     ports:
       - "8083:8081"
-
+    environment:
+      - env.log.level=DEBUG
     volumes:
       - ./data/paimon:/tmp/paimon
       - ./creFlinkFlows:/sql

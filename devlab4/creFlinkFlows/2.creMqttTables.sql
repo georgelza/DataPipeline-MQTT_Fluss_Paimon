@@ -42,7 +42,7 @@ CREATE OR REPLACE TABLE hive_catalog.iot.factory_iot_101 (
     WATERMARK FOR ts_WM AS ts_WM
 ) WITH (
     'connector'     = 'mqtt',
-    'server'        = 'broker_north:1883',
+    'server'        = 'broker_north',
     'port'          = '1883',
     'topic'         = 'factory_iot/north/101',
     'username'      = 'mqtt_dev',
@@ -67,12 +67,12 @@ CREATE OR REPLACE TABLE hive_catalog.iot.factory_iot_102 (
     ts_WM as TO_TIMESTAMP(FROM_UNIXTIME(CAST(`ts` AS BIGINT) / 1000)),
     WATERMARK FOR ts_WM AS ts_WM
 ) WITH (
-    'connector'         = 'kevin-flink-connector-mqtt3',
-    'brokerUrl'         = 'tcp://broker_north:1883',
-    'topic'             = 'factory_iot/north/102',
-    'clientId'          = 'devlab2',
-    'username'          = 'mqtt_dev',
-    'password'          = 'abfr24'
+    'connector'     = 'mqtt',
+    'server'        = 'broker_north',
+    'port'          = '1883',
+    'topic'         = 'factory_iot/north/102',
+    'username'      = 'mqtt_dev',
+    'password'      = 'abfr24'
 );
 
 SET 'pipeline.name' = 'Factory_iot 103 Source';
@@ -93,10 +93,12 @@ CREATE OR REPLACE TABLE hive_catalog.iot.factory_iot_103 (
     ts_WM as TO_TIMESTAMP(FROM_UNIXTIME(CAST(`ts` AS BIGINT) / 1000)),
     WATERMARK FOR ts_WM AS ts_WM
 ) WITH (
-    'connector'         = 'mqtt',
-    'server'            = 'broker_south',
-    'port'              = '1883',
-    'topic'             = 'factory_iot/south/103'
+    'connector'     = 'mqtt',
+    'server'        = 'broker_south',
+    'port'          = '1884',
+    'topic'         = 'factory_iot/south/103',
+    'username'      = 'mqtt_dev',
+    'password'      = 'abfr24'
 );
 
 SET 'pipeline.name' = 'Factory_iot 104 Source';
@@ -117,10 +119,12 @@ CREATE OR REPLACE TABLE hive_catalog.iot.factory_iot_104 (
     ts_WM as TO_TIMESTAMP(FROM_UNIXTIME(CAST(`ts` AS BIGINT) / 1000)),
     WATERMARK FOR ts_WM AS ts_WM
 ) WITH (
-    'connector'         = 'mqtt',
-    'server'            = 'broker_south',
-    'port'              = '1883',
-    'topic'             = 'factory_iot/south/104'
+    'connector'     = 'mqtt',
+    'server'        = 'broker_south',
+    'port'          = '1884',
+    'topic'         = 'factory_iot/south/104',
+    'username'      = 'mqtt_dev',
+    'password'      = 'abfr24'
 );
 
 SET 'pipeline.name' = 'Factory_iot 105 Source';
@@ -141,10 +145,12 @@ CREATE OR REPLACE TABLE hive_catalog.iot.factory_iot_105 (
     ts_WM as TO_TIMESTAMP(FROM_UNIXTIME(CAST(`ts` AS BIGINT) / 1000)),
     WATERMARK FOR ts_WM AS ts_WM
 ) WITH (
-    'connector'         = 'mqtt',
-    'server'            = 'broker_east',
-    'port'              = '1883',
-    'topic'             = 'factory_iot/east/105'
+    'connector'     = 'mqtt',
+    'server'        = 'broker_east',
+    'port'          = '1885',
+    'topic'         = 'factory_iot/east/105',
+    'username'      = 'mqtt_dev',
+    'password'      = 'abfr24'
 );
 
 SET 'pipeline.name' = 'Factory_iot 104 Source';
@@ -165,10 +171,12 @@ CREATE OR REPLACE TABLE hive_catalog.iot.factory_iot_106 (
     ts_WM as TO_TIMESTAMP(FROM_UNIXTIME(CAST(`ts` AS BIGINT) / 1000)),
     WATERMARK FOR ts_WM AS ts_WM
 ) WITH (
-    'connector'         = 'mqtt',
-    'server'            = 'broker_east',
-    'port'              = '1883',
-    'topic'             = 'factory_iot/east/106'
+    'connector'     = 'mqtt',
+    'server'        = 'broker_east',
+    'port'          = '1885',
+    'topic'         = 'factory_iot/east/106',
+    'username'      = 'mqtt_dev',
+    'password'      = 'abfr24'
 );
 
 
