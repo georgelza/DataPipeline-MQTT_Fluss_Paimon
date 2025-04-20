@@ -6,4 +6,4 @@ This makes it simpler to add/remove libraries as we simply have to restart the f
 
 As the Jobmanager, Taskmanager and sql-client all use the same libraries they can all use this one set, thus also reducing their image sizes.
 
-The various files are downloaded by executing the `getlibs.sh` file located in the `<root>/devlab/` directory.
+The various files are downloaded by executing the `getlibs.sh` file located in the `<root>/devlab#/` directory.
