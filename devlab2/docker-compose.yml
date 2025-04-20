@@ -64,7 +64,6 @@ services:
 
 
   #begin Fluss cluster
-  #begin Fluss cluster
   coordinator-server:
     image: fluss/fluss:0.6.0
     container_name: coordinator-server

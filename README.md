@@ -4,17 +4,17 @@ Work in Progress... NOT COMPLETE.
 
 ## Overview
 
-This originally started as a simple idea, create a IoT JSON packaged payload, publish it to a **MQTT Broker**, consume using a connector into Flink and then down to Fluss and down to Paimon stored on S3.
+This originally started as a simple idea, create a IoT JSON packaged payload, publish it to a **MQTT Broker**, consume using a connector into Flink and then down to Fluss and down to the lakehouse configured Paimon storage onto the configured storage technology, which was originally planned as S3.
 
-But we tripped and ended in the proverbial rabbit hole, again.
+But we tripped and ended in the proverbial rabbit hole, again, nothing new.
 
 The numbers below maps to the `<root>/devlab#` directories
 
 0.  First is just to show how the stack fit together, this is a very simple Flink/Fluss example (as per Giannis video NEED his OK still... to be after he published his video), persisting both tablet server and Lakehouse data onto local disk via volume mounts.
 
-1.  Second we're doing the same as above, but now persisted onto HDFS.
+1.  Second we're doing the same as above, but now persisted onto **HDFS**.
 
-2.  Ok, now a back to our original plan, we will create the IoT specific payload as shown below, post it onto 3 x **MQTT Brokers**,consuming themessages using one of the following 2 source connectors 
+2.  Ok, now a back to our original plan, we will create the IoT specific payload as shown below, post it onto 3 x **MQTT Brokers**,consuming themessages using one of the following 2 source connectors.
 
 - [davidfantasy - flink-connector-mqtt](https://github.com/davidfantasy/flink-connector-mqtt) or 
 
@@ -28,7 +28,7 @@ from our **Apache Flink** cluster and ingest the data into our `hive_catalog.iot
 4.  Same as #2, but persisted onto **AWS S3** hosted on a **MinIO** Container, ye the actual original idea for this blog, or was that series, but def a Rabbbit hole.
 
 
-### For sections devlab #2,3 and 4:
+### For sections devlab #2,3 & 4
 
 2. For **MQTT Brokers**, We will post the 6 factories onto 3 seperate **MQTT brokers** based on the regional locatation, namely North, South and East.
 
@@ -54,6 +54,8 @@ We're still using our **Apache Hive Metastore** as catalog with a **PostgreSQL**
 - PostgreSQL 12
 
 - Python 3.12
+
+- Minio S3 
 
 
 ## Our various IoT Payloads formats.
@@ -149,27 +151,29 @@ We're still using our **Apache Hive Metastore** as catalog with a **PostgreSQL**
 4. Slight Digress, At this stage we need to configure our Mosquito Brokers. See below
 
 
+### Mosquito Access control
+
 [Authentication methods](https://mosquitto.org/documentation/authentication-methods/)
 
 I decided to behave an enable authentification on the MQTT Broker, to accomplish this we need a password file with a username and password contained. To prepare for this follow the following steps.
 
-Start by executing <root>/devlab/make run
+Start by executing `<root>/devlab#/make run`
 
 This will start the stack, now execute the below.
 
 Now execute
-    docker compose exec mqtt_broker_north /bin/sh
+    `docker compose exec mqtt_broker_north /bin/sh`
 
 Followby by executing inside the container.
 
-    mosquitto_passwd -c /mosquitto/config/password_file mqtt_dev
+    `mosquitto_passwd -c /mosquitto/config/password_file mqtt_dev`
 
-    I used `abfr24` as password, this will match the .pws in <root>/app_iot1/.pws
+    I used `abfr24` as password, this will match the `.pws` in `<root>/app_mqttiot1/.pws`
 
-First make sure the <root>/devlab/data/mqtt/<east/north and south>/config/mosquitto.conf contain the below
+First make sure the `<root>/devlab#/conf/mqtt/<east/north/south>/mosquitto.conf` contain the below
 
 North
-```
+```shell
     persistence true
     listener 1883
     persistence_location /mosquitto/data
@@ -178,7 +182,7 @@ North
 ```
 
 South
-```
+```shell
     persistence true
     listener 1884
     persistence_location /mosquitto/data
@@ -187,7 +191,7 @@ South
 ```
 
 East
-```
+```shell
     persistence true
     listener 1885
     persistence_location /mosquitto/data
@@ -195,16 +199,15 @@ East
     password_file /mosquitto/config/password_file
 ```
 
-Now execute make down, once the stack is stopped execute the below.
+Now execute `make down`, once the stack is stopped execute the below.
 
-    Copy the files located in <root>/devlab/data/mqtt/north/config to ../south/config and ../east/config
+    Copy the files located in `<root>/devlab#/conf/mqtt/north/` to `../south/` & `../east/`
 
 
 I use both MQTT Explorer and MQTT.fx to see whats happening on MQTT Brokers.
 
 
-4. Now, to run it please read README.md in <root>/devlab/README.md
-
+4. Now, to run it please read README.md in `<root>/devlab#/README.md`
 
 
 ## Projects / Components
@@ -234,7 +237,7 @@ I use both MQTT Explorer and MQTT.fx to see whats happening on MQTT Brokers.
 
 As I was travelling while writing this blog and did not want to pull the libraries on every build I decided to downlaod them once into the below directory and then copy them on build into container. Just a different way less bandwidth and also slightly faster.
 
-The `devlab#/data/flink/lib/*` directories will house our Java libraries required by our Flink stack. 
+The `devlab#/conf/flink/lib/*` directories will house our Java libraries required by our Flink stack. 
 
 Normally I'd include these in the Dockerfile as part of the image build, but during development it's easier if we place them here and then mount the directories into the containers at run time via our `docker-compose.yml` file inside the volume specification for the flink-* services.
 
@@ -270,7 +273,6 @@ The various files are downloaded by executing the `getlibs.sh` file located in t
 
 ## Uncategorized notes and Articles
 
-
 - [Apache Flink FLUSS](https://www.linkedin.com/posts/polyzos_fluss-is-now-open-source-activity-7268144336930832384-ds87?utm_source=share&utm_medium=member_desktop)
 
 
@@ -281,7 +283,11 @@ The various files are downloaded by executing the `getlibs.sh` file located in t
 
 ### HDFS Cluster
 
-- Add link to HDFS Blog/Build
+- [Setting Up an HDFS Cluster with Docker Compose: A Step-by-Step Guide](https://bytemedirk.medium.com/setting-up-an-hdfs-cluster-with-docker-compose-a-step-by-step-guide-4541cd15b168)
+- [Deploying Hadoop using Docker](https://medium.com/@garin.sanny07/hadoop-cluster-55477505d0ff)
+
+- [Installing the Hadoop Stack using Docker](https://hackmd.io/@silicoflare/docker-hadoop)
+
 
 ### Flink Cluster
 
@@ -306,7 +312,7 @@ The various files are downloaded by executing the `getlibs.sh` file located in t
 - [Log4J Logging Levels](https://logging.apache.org/log4j/2.x/manual/customloglevels.html)
     
 
-- The Flink jobmanager and taskmanager log levels can be modified by editing the various `devlab/conf/*.properties` files. Remember to restart your Flink containers.
+- The Flink jobmanager and taskmanager log levels can be modified by editing the various `devlab#/conf/*.properties` files. Remember to restart your Flink containers.
 
 
 ### Great quick reference for docker compose
@@ -329,8 +335,22 @@ The various files are downloaded by executing the `getlibs.sh` file located in t
 
 ### Credits:
 
-This blog would not have been possible without the assistance of allot of people, 2 that I do need to mention by name being Jark Wu, the product owner of Fluss at Alibaba and Giannis P from Ververica.
+This blog would not have been possible without the assistance of allot of people, 3 that I do need to mention by name being Ben Gamble, Jark Wu (the product owner of Fluss at Alibaba) & Giannis Polyzos from [Ververica](http://ververica.com).
 
+    Ben Gamble,
+        Field CTO @ [Ververica](http://ververica.com)
+        Apache Kafka, Apache Flink, streaming and stuff (as he calls it)
+        A good friend, thats always great to chat to... and we seldom stick to original topic.
+        https://www.linkedin.com/in/bengamble7/
+        https://confluentcommunity.slack.com/team/U03R0RG6CHZ
+
+    Jark Wu
+        Head of Fluss and Flink SQL at Alibaba Cloud (Ververica) | PMC member and Committer of Apache Flink
+        https://www.linkedin.com/in/jarkwu/
+
+    Giannis Polyzos
+        Staff Streaming Architect | Fluss Lead @ [Ververica](http://ververica.com) | Apache Flink
+        https://www.linkedin.com/in/polyzos/
 
 ### By:
 
@@ -339,4 +359,6 @@ George
 [georgelza@gmail.com](georgelza@gmail.com)
 
 [George on Linkedin](https://www.linkedin.com/in/george-leonard-945b502/)
+
+[George on Medium](https://medium.com/@georgelza)
 
