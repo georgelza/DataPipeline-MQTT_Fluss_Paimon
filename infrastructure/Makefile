@@ -28,9 +28,9 @@ help:
 	@echo "$$HELP"
 .PHONY: help
 
-pullall: os mqtt flink db s3 misc hadoop hive
+pullall: os mqtt db minio misc hadoop hive flink hdfs
 
-buildall: builddb buildflinkbase buildos buildopenjdk8 buildhive
+buildall: buildos buildopenjdk8 buildopenjdk11 buildhive buildflinkbase builddb
 
 
 # Base images used along the way, used to build 2nd level images.
@@ -42,18 +42,21 @@ mqtt:
 	docker pull eclipse-mosquitto:latest
 
 flink:
-	docker pull arm64v8/flink:1.19.1-scala_2.12-java11
+	docker pull flink:1.20.1-scala_2.12-java11
+
+fluss:
+	docker pull fluss/fluss:0.6.0
 
 db:
 	docker pull postgres:12	
 
-s3: 
+minio: 
 	docker pull minio/minio:latest
 	docker pull minio/mc:latest
 
 misc:
 # 	Used for inspecting data in the various back end stores.
-	docker pull python:3.12-bookworm
+	docker pull python:3.13-bookworm
 	docker pull codieplusplus/duckdb
 
 hadoop:
@@ -67,19 +70,36 @@ hive:
 	cd build-hive-openjdk8/basehive; cd stage; wget https://jdbc.postgresql.org/download/postgresql-42.7.4.jar
 
 
-# Build images, not 100% all of whats needed, but these are all common images.
-buildflinkbase:
-	cd build-flink-base-1.19.1; make build
+hdfs:
+	cd build-hdfs-openjdk11/; mkdir stage; cd  stage; wget https://downloads.apache.org/hadoop/common/hadoop-3.3.5/hadoop-3.3.5-aarch64.tar.gz
 
-builddb:
-	cd build-postgres-12.0; make build
 
+# Build a base Ubuntu 20.04 OS
 buildos:
 	cd ./build-ubuntu-os-24.04; make build
 
+# Add Open JDK 8 & 17
 buildopenjdk8:
 	cd build-ubuntu-os-openjdk8; make build
 
+buildopenjdk11:
+	cd build-ubuntu-os-openjdk11; make build
+
+# Now add Hive 3.3.4 on the openjdk8 base
 buildhive:
 	cd build-hive-openjdk8; make build
 
+# Base images with some add ons - Flink 1.20.1 - Java 11
+buildflinkbase:
+	cd build-flink-base-1.20.1; make build
+
+# Base image with some add ons - Probably to be used for Fluss 0.6.0 on the openjdk17
+buildflussbase:
+	cd build-fluss-0.6.0; make build
+
+buildhdfs:
+	cd build-hdfs-openjdk11; make buildbase
+	cd build-hdfs-openjdk11; make build
+
+builddb:
+	cd build-postgres-12.0; make build

@@ -18,7 +18,8 @@
 *.out
 *.log
 
-# Password/Credentials
+# Password/Credentials -> this is a LAB, nothing critical here so including passwords to make it simpler for someone
+# to build quick and run, without needing to know which passwords is mapped to which other app/variable.
 #devlab/.env
 #.pwd
 
@@ -27,22 +28,47 @@
 .vscode/
 venv/*
 
+# Datagen
+# check basic setup
+devlab0/conf/flink/lib/flink/*
+devlab0/conf/flink/lib/fluss/*
+devlab0/conf/flink/lib/hive/*
+# HDFS
+devlab1/conf/flink/lib/flink/*
+devlab1/conf/flink/lib/fluss/*
+devlab1/conf/flink/lib/hive/*
+
+# MQTT
+# check basic setup
+devlab2/conf/flink/lib/flink/*
+devlab2/conf/flink/lib/fluss/*
+devlab2/conf/flink/lib/hive/*
+# HDFS
+devlab3/conf/flink/lib/flink/*
+devlab3/conf/flink/lib/fluss/*
+devlab3/conf/flink/lib/hive/*
+# S3/MinIO
+devlab4/conf/flink/lib/flink/*
+devlab4/conf/flink/lib/fluss/*
+devlab4/conf/flink/lib/hive/*
+
+gp/*
+
+infrastructure/build-hadoop-openjdk11/base/stage/*
 infrastructure/build-hive-openjdk8/basehadoop/stage/*
 infrastructure/build-hive-openjdk8/basehive/stage/*
 
-app_iot1/__pycache__/*
-app_iot2/__pycache__/*
-app_iot3/__pycache__/*
+app_mqttiot1/__pycache__/*
+app_mqttiot2/__pycache__/*
+app_mqttiot3/__pycache__/*
+app_mqttiot1/logs/*
+app_mqttiot2/logs/*
+app_mqttiot3/logs/*
 
 old/*
 
-devlab/data/flink/*
-devlab/data/minio/*
-devlab/data/warehouse/*
-devlab/data/postgres/*
-devlab/data/mqtt/north/data/*
-devlab/data/mqtt/north/log/*
-devlab/data/mqtt/south/data/*
-devlab/data/mqtt/south/log/*
-devlab/data/mqtt/east/data/*
-devlab/data/mqtt/east/log/*
+devlab0/data/*
+devlab1/data/*
+devlab2/data/*
+devlab3/data/*
+devlab4/data/*
