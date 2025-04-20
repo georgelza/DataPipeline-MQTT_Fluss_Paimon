@@ -16,23 +16,28 @@ The numbers below maps to the `<root>/devlab#` directories
 
 2.  Ok, now a back to our original plan, we will create the IoT specific payload as shown below, post it onto 3 x **MQTT Brokers**,consuming themessages using one of the following 2 source connectors.
 
-- [davidfantasy - flink-connector-mqtt](https://github.com/davidfantasy/flink-connector-mqtt) or 
+- [davidfantasy - flink-connector-mqtt](https://github.com/davidfantasy/flink-connector-mqtt) (Preferred) or 
 
 - [kevin-flink-connector-mqtt3](https://github.com/kevin4936/kevin-flink-connector-mqtt3)
-  [Jar file](https://repo1.maven.org/maven2/io/github/kevin4936/kevin-flink-connector-mqtt3_2.12/1.14.4.1/kevin-flink-connector-mqtt3_2.12-1.14.4.1.jar) (Preferred)
+  [Jar file](https://repo1.maven.org/maven2/io/github/kevin4936/kevin-flink-connector-mqtt3_2.12/1.14.4.1/kevin-flink-connector-mqtt3_2.12-1.14.4.1.jar)
 
 from our **Apache Flink** cluster and ingest the data into our `hive_catalog.iot.factory_iot_#` tables. We will then insert the data into our `fluss_catalog.iot.*` selecting from the `hive_catalog.iot.*` tables.
 
-3.  Same as #2, but persisted onto **HDFS**.
+1.  Same as #2, but persisted onto **HDFS**.
 
-4.  Same as #2, but persisted onto **AWS S3** hosted on a **MinIO** Container, ye the actual original idea for this blog, or was that series, but def a Rabbbit hole.
+2.  Same as #2, but persisted onto **AWS S3** hosted on a **MinIO** Container, ye the actual original idea for this blog, or was that series, but def a Rabbbit hole.
 
 
-### For sections devlab #2,3 & 4
+### For sections devlab #2, 3 & 4
 
-2. For **MQTT Brokers**, We will post the 6 factories onto 3 seperate **MQTT brokers** based on the regional locatation, namely North, South and East.
+We will post the 6 factories onto 3 seperate **MQTT Brokers** based on the regional locatation/distribution, namely North, South and East.
+
+
+### Flink Catalog
+
 
 We're still using our **Apache Hive Metastore** as catalog with a **PostgreSQL** database for backend storage.
+See below for version information.
 
 
 ## Modules and Versions
@@ -123,7 +128,7 @@ We're still using our **Apache Hive Metastore** as catalog with a **PostgreSQL**
 
 0. devlab#/docker_compose.yml
 
-1. .pwd in app_iot1 in siteX.sh
+1. .pwd in app_mqttiot# in siteX.sh
 
 2. devlab#/.env
 
@@ -148,7 +153,7 @@ We're still using our **Apache Hive Metastore** as catalog with a **PostgreSQL**
 
 3. make build
 
-4. Slight Digress, At this stage we need to configure our Mosquito Brokers. See below
+4. Slight Digress, At this stage we need to configure our Mosquito Brokers. See below.
 
 
 ### Mosquito Access control
@@ -201,13 +206,13 @@ East
 
 Now execute `make down`, once the stack is stopped execute the below.
 
-    Copy the files located in `<root>/devlab#/conf/mqtt/north/` to `../south/` & `../east/`
+    Copy the files located into the `<root>/devlab#/conf/mqtt/north/` to `../south/` & `../east/` directories.
 
 
 I use both MQTT Explorer and MQTT.fx to see whats happening on MQTT Brokers.
 
 
-4. Now, to run it please read README.md in `<root>/devlab#/README.md`
+4. Now, to run it please read README.md in `<root>/devlab#/README.md` file.
 
 
 ## Projects / Components
@@ -233,9 +238,14 @@ I use both MQTT Explorer and MQTT.fx to see whats happening on MQTT Brokers.
 
 ## Misc Notes
 
+The various `REAMDE.md` utilises markdown syntax. You can refer to `https://markdownlivepreview.com` & `https://dillinger.io` for more information, examples.
+
+To view a mardown file, `https://jumpshare.com/viewer/md` or if you using Visual Studio Code search for markdown as a module and try some of them.
+
+
 ### Flink Libraries
 
-As I was travelling while writing this blog and did not want to pull the libraries on every build I decided to downlaod them once into the below directory and then copy them on build into container. Just a different way less bandwidth and also slightly faster.
+As I am always travelling while writing these blog's and did not want to pull the libraries on every build I decided to downlaod them once into the below directory and then mount them into container. Just a different way less bandwidth and also slightly faster builds.
 
 The `devlab#/conf/flink/lib/*` directories will house our Java libraries required by our Flink stack. 
 

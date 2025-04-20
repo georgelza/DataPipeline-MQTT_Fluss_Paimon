@@ -4,7 +4,7 @@
 
 ### MQTT Broker information -> see .pws
 export MQTT_BROKER_HOST=localhost
-export MQTT_BROKER_PORT=1883
+export MQTT_BROKER_PORT=1885
 export MQTT_CLIENTTAG=factory_east
 export MQTT_TOPIC=factory_iot/east
 

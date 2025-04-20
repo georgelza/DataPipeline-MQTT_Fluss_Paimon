@@ -2,19 +2,23 @@
 
 For those that dont want to use authenfitication on the Mosquito / MQTT broker, copy the `mosquitto.conf` file into the `<root>/devlab#/conf/mqtt/<region>` directory. You can also delete the password file.
 
-Note you can direct all the payloads via a single broker by changing the `export MQTT_BROKER_PORT=1883` port number in the 3 siteX.sh files located in `<root>/app_mqttiot1/`.
-
 If you don't want to create the password file simply copy the `password_file` from this directory into the above mentioned config directory.
+
+You can direct all the payloads via a single broker by changing the `export MQTT_BROKER_PORT=188X` port number in the 3 x `siteX.sh` files located in `<root>/app_mqttiot1/`, `<root>/app_mqttiot2/` & `<root>/app_mqttiot3/` to all be `export MQTT_BROKER_PORT=1883`.
+
+Note: you will also need to change the `<root>/devlab#/creFlinkFlows/2.creMqttTables.sql` to reference the relevant broker/port.
 
 
 ## MQTT Source and Sink connectors Notes
 
-### Project Docs
+### Flink Project Docs
+
 https://nightlies.apache.org/flink/flink-docs-master/docs/dev/table/sourcessinks/
 https://nightlies.apache.org/flink/flink-docs-master/docs/dev/datastream/sources/
 
 
-### Connectors
+### MQTT Connectors
+
 [davidfantasy](https://github.com/davidfantasy/flink-connector-mqtt)
 [davidfantasy](https://gitee.com/davidfantasy/flink-connector-mqtt)
 [Jar File](https://repo1.maven.org/maven2/com/github/davidfantasy/flink-connector-mqtt/1.1.0/flink-connector-mqtt-1.1.0.jar)
