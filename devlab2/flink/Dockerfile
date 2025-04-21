@@ -1,6 +1,6 @@
 ARG REPO_NAME="georgelza"
 
-FROM ${REPO_NAME}/apacheflink-base:1.20.1-scala_2.12-java11
+FROM ${REPO_NAME}/apacheflink-base:1.20.1-scala_2.12-java17
 SHELL ["/bin/bash", "-c"]
 
 # this is where we have flink itself installed.

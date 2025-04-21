@@ -162,7 +162,7 @@ services:
 
   #begin Flink cluster
   jobmanager:
-    image: georgelza/apacheflink:1.20.1-scala_2.12-java11
+    image: georgelza/apacheflink:1.20.1-scala_2.12-java17
     hostname: jobmanager
     container_name: jobmanager
     ports:
@@ -196,7 +196,7 @@ services:
     command: jobmanager
 
   taskmanager:
-    image: georgelza/apacheflink:1.20.1-scala_2.12-java11
+    image: georgelza/apacheflink:1.20.1-scala_2.12-java17
     depends_on:
       - jobmanager
     deploy:

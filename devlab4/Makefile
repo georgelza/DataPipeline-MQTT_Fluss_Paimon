@@ -58,6 +58,15 @@ deploy: createcat
 createcat:
 	docker compose exec jobmanager /opt/flink/bin/sql-client.sh -f /sql/1.creCat.sql
 
+source:
+	docker compose exec jobmanager /opt/flink/bin/sql-client.sh -f /sql/2.creSource.sql
+
+target:
+	docker compose exec jobmanager /opt/flink/bin/sql-client.sh -f /sql/3.creTarget.sql
+
+lakehouse:
+	docker compose exec coordinator-server /bin/bash -f /shell/4.runLakehouse.bsh
+
 
 # Run Python app  101,104
 rp1:

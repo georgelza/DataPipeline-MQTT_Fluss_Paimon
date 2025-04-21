@@ -2,7 +2,7 @@
 include ../.env
 
 IMAGE_NAME=apacheflink
-VERSION=1.20.1-scala_2.12-java11
+VERSION=1.20.1-scala_2.12-java17
 
 define HELP
 

@@ -53,6 +53,8 @@ source:
 target:
 	docker compose exec jobmanager /opt/flink/bin/sql-client.sh -f /sql/3.creTarget.sql
 
+lakehouse:
+	docker compose exec coordinator-server /bin/bash -f /shell/4.runLakehouse.bsh
 
 stop:
 	docker compose stop
@@ -87,7 +89,3 @@ jm:
 
 cs:
 	docker compose exec coordinator-server /bin/bash
-
-#```shell  -> fluss coordinator-server
-# ./bin/lakehouse.sh -D flink.rest.address=jobmanager -D flink.rest.port=8081 -D flink.execution.checkpointing.interval=30s -D flink.parallelism.default=2
-#```

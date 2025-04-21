@@ -42,7 +42,7 @@ mqtt:
 	docker pull eclipse-mosquitto:latest
 
 flink:
-	docker pull flink:1.20.1-scala_2.12-java11
+	docker pull flink:1.20.1-scala_2.12-java17
 
 fluss:
 	docker pull fluss/fluss:0.6.0
@@ -63,7 +63,7 @@ hadoop:
 	cd build-hive-openjdk8/basehadoop; mkdir stage; cd stage; wget https://downloads.apache.org/hadoop/common/hadoop-3.3.5/hadoop-3.3.5-aarch64.tar.gz
 
 hive:
-# hive 3.1.3 is located in the Archive section now.
+# hive 3.1.3 is located in the Archive section now, to go on top of Hadoop 3.3.5
 	cd build-hive-openjdk8/basehive; mkdir stage; cd  stage; wget https://archive.apache.org/dist/hive/hive-3.1.3/apache-hive-3.1.3-bin.tar.gz
 	cd build-hive-openjdk8/basehive; cd stage; wget https://downloads.apache.org/hadoop/common/hadoop-3.3.5/hadoop-3.3.5-aarch64.tar.gz
 	cd build-hive-openjdk8/basehive; cd stage; wget http://www.congiu.net/hive-json-serde/1.3.8/cdh5/json-serde-1.3.8-jar-with-dependencies.jar 
@@ -89,7 +89,7 @@ buildopenjdk11:
 buildhive:
 	cd build-hive-openjdk8; make build
 
-# Base images with some add ons - Flink 1.20.1 - Java 11
+# Base images with some add ons - Flink 1.20.1 - Java 17
 buildflinkbase:
 	cd build-flink-base-1.20.1; make build
 

@@ -64,10 +64,13 @@ The credentials are sourced from the `.env` file and the start parameters out of
 
 4. `make rp1`  -> this will start the application to generate data for the North based factories, similarly `rp2` will start for the south and `rp3`will be the east based factories.
 
-5. `docker compose exec flink-jobmanager /bin/bash`  or `make jm` as ashort cut.
+5. `docker compose exec flink-jobmanager /bin/bash`  or `make jm` as a short cut.
 
-6. Paste contents of `devlab/creFlinkFlows/<....>.bsh`
+6. Paste contents of `devlab#/creFlinkFlows/4.runLakehouse.bsh`
 
+```shell  -> fluss coordinator-server
+./bin/lakehouse.sh -D flink.rest.address=jobmanager -D flink.rest.port=8081 -D flink.execution.checkpointing.interval=30s -D flink.parallelism.default=2
+```
 
 ### Our Data Generator's.
 

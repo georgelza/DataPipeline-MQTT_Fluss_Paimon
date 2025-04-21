@@ -1,0 +1,4 @@
+#!/bin/bash
+
+./bin/lakehouse.sh -D flink.rest.address=jobmanager -D flink.rest.port=8081 -D flink.execution.checkpointing.interval=30s -D flink.parallelism.default=2
+

@@ -1,5 +1,5 @@
 
-FROM arm64v8/flink:1.20.1-scala_2.12-java11
+FROM arm64v8/flink:1.20.1-scala_2.12-java17
 SHELL ["/bin/bash", "-c"]
 
 ENV DUCKDB_VERSION=1.1.3
